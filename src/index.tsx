@@ -1,23 +1,53 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import {createRoot} from "react-dom/client";
+import { Provider } from "react-redux";
+import store from "./Redux/Store";
+import App from "./App";
+import { QueryClient, QueryClientProvider, QueryCache } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-const container = document.getElementById('root')!;
+const isDevelopment = process.env.NODE_ENV === "development";
+console.log('isDevelopment :', isDevelopment)
+
+function prepare() {
+  if (!isDevelopment) {
+    const { worker } = require("./mocks/browser");
+    worker.start();
+  }
+  return Promise.resolve();
+}
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      console.log(error, query);
+      if (query.state.data !== undefined) {
+        alert(`Error has been occurred in queryCache...`);
+      }
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }),
+});
+
+const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 
-root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
-);
+prepare().then(() => {
+  root.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <App />
+          </QueryClientProvider>
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+})
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
