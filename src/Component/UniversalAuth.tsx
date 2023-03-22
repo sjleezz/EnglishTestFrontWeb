@@ -2,10 +2,10 @@ import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { VOCA_PRO_API_URL, universalFetchData } from "../Service/FetchData";
 import { UniversalFetchDataResolveType, TErrorType } from "../index.d";
-import { useDispatch } from "react-redux";
-import { setAuthToken } from "../Redux/Actions/actionsForData";
+import { useSelector, useDispatch } from "react-redux";
+import { setAuthToken, setAuthTokenForSpeechPro } from "../Redux/Actions/actionsForData";
+import { RootState } from "../Redux/Reducer/rootReducer";
 
-// const _URL = "https://edutech-speechpro.mediazenaicloud.com:37205";
 // const _URL = process.env.REACT_APP_SPEECH_PRO_API_URL;
 // const signInData = {
 //     loginId: 'admin',
@@ -18,7 +18,9 @@ const signInData = {
 
 export const UniversalAuth = () => {
 
-  console.log('[UniversalAuth]')
+  const authToken = useSelector((state : RootState) => state.dataReducer.authToken )
+
+  console.log('[UniversalAuth] authToken :', authToken)
 
   // Dispatcher
   const dispatch = useDispatch();
@@ -32,7 +34,8 @@ export const UniversalAuth = () => {
     async () =>
       universalFetchData({
         method: "post",
-        url: VOCA_PRO_API_URL + "/auth/signIn",
+        // url: "/api/auth/signIn",
+        url: "/auth/signIn",
         data: signInData,
         headers: {
           Accept: "application/json, text/plain, */*",
@@ -45,15 +48,15 @@ export const UniversalAuth = () => {
         // data : { message : ReturnMessageType, data : any }
         // 성공시 호출
         console.log(
-          `[Auth] result.data.token : ${result.data.token}`
+          `[UniversalAuth] result.data.token : ${result.data.data.token}`
         );
         // save the auth token in store
-        dispatch(setAuthToken(result.data.token));
+        dispatch(setAuthToken(result.data.data.token));
       },
       onError: (e) => {
         // 실패시 호출 (401, 404 같은 error가 아니라 정말 api 호출이 실패한 경우만 호출됩니다.)
         // 강제로 에러 발생시키려면 api단에서 throw Error 날립니다. (참조: https://react-query.tanstack.com/guides/query-functions#usage-with-fetch-and-other-clients-that-do-not-throw-by-default)
-        console.log(`[Auth] e.message : ${e.message}`);
+        console.log(`[UniversalAuth] e.message : ${e.message}`);
       },
     }
   );

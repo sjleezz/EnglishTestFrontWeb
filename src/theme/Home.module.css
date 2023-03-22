@@ -8,6 +8,18 @@ body {
     margin: 0;
     overflow-y: hidden;
   }
+
+  .name {
+    white-space:pre-line;
+    font-family: contents;
+    font-size: 100px;
+  }
+
+  .subname {
+    white-space:pre-line;
+    font-family: contents;
+    font-size: 30px;
+  }
   
   .outer {
     height: 100vh;
@@ -22,34 +34,39 @@ body {
   .inner {
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    font-family: contents;
-    font-size: 100px;
+    
   }
   
-  .bgYellow {
+  .tab1 {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-direction: column;
     overflow: hidden;
-    background-color: #f7f6cf;
+    /* background-color: #f7f6cf; */
+    writing-mode:vertical-rl;
   }
   
-  .bgBlue {
+  .tab2 {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-direction: column;
     overflow: hidden;
-    background-color: #b6d8f2;
+    /* background-color: #f7f6cf; */
+    writing-mode:vertical-rl;
   }
   
-  .bgPink {
+  .tab3 {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-direction: column;
     overflow: hidden;
-    background-color: #f4cfdf;
+    /* background-color: #f7f6cf; */
+    writing-mode:vertical-rl;
   }
   
   .divider {
@@ -63,10 +80,4 @@ body {
     min-width: 100%;
     min-height: 100%;
     /* filter: blur(10px); */
-  }
-
-  .title {
-    position: absolute;
-    font-family: contents;
-    font-size: 100px;
   }

@@ -11,7 +11,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 console.log('isDevelopment :', isDevelopment)
 
 function prepare() {
-  if (!isDevelopment) {
+  if (isDevelopment) {
     const { worker } = require("./mocks/browser");
     worker.start();
   }

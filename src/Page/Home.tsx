@@ -1,155 +1,159 @@
-import { MenuList } from "../index.d";
-import { useState, useRef, useEffect } from "react";
-import styles from "../theme/Home.module.css";
-import cn from "classnames";
-import assess1 from "../assets/images/assess1.jpg";
-import assess2 from "../assets/images/assess2.jpg";
-import Dots from "../Component/Dots";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  AppstoreOutlined,
+  BarChartOutlined,
+  CloudOutlined,
+  ShopOutlined,
+  TeamOutlined,
+  HomeOutlined,
+  WalletOutlined,
+  UserOutlined,
+  CommentOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu, MenuProps, Switch, Space } from "antd";
+import { MenuList, MenuListArray } from "../index.d";
+import SpeechPro from "../Component/SpeechPro/SpeechPro";
+import VocaPro from "../Component/VocaPro/VocaPro";
+import GrammarPro from "../Component/GrammarPro/GrammarPro";
+import Main from "../Page/Main";
+import { RootState } from "../Redux/Reducer/rootReducer";
+import { UniversalAuth } from "../Component/UniversalAuth";
+import { useDispatch } from "react-redux";
+import { setThemeDM } from "../Redux/Actions/actionsForTheme";
 
-const DIVIDER_HEIGHT = 5;
+const { Footer, Sider } = Layout;
 
-export const Home = ({
-  setNext,
-}: {
-  setNext: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const [scrollIndex, setScrollIndex] = useState(1);
-  const outerDivRef = useRef<HTMLDivElement>(null);
+export const DarkColor = "rgba(0, 55, 101, 1)";
+export const LightColor = "rgba(255, 255, 255, 1)";
 
-  // 로컬 변수 용도로 useRef를 사용하는 경우, MutableRefObject<T>를 사용해야 하므로
-  // 제네릭 타입과 같은 타입의 초깃값을 넣어주자.
+export const Home = () => {
+  const [mode, setMode] = useState<number>(0);
 
-  // DOM을 직접 조작하기 위해 프로퍼티로 useRef 객체를 사용할 경우,
-  // RefObject<T>를 사용해야 하므로 초깃값으로 null을 넣어주자.
+  // Read-only
+  const state = useSelector((state: RootState) => state.dataReducer);
+  const darkMode = useSelector(
+    (state: RootState) => state.themeReducer.darkMode
+  );
 
-  useEffect(() => {
-    const wheelHandler = (e: WheelEvent) => {
-      e.preventDefault();
-      // 스크롤 행동 구현
-      const { deltaY } = e;
-      const { scrollTop } = outerDivRef.current as HTMLElement; // 스크롤 위쪽 끝부분 위치
-      const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+  const dispatch = useDispatch();
 
-      if (deltaY > 0) {
-        // 스크롤 내릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, down");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(2);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, down");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
+  console.log("[Home] mode", mode);
+  console.log("[Home] state", state);
+
+  const itemBuilder = (
+    MenuListArray: string[],
+    onClickCallback: (i: number) => void
+  ): MenuProps["items"] =>
+    [
+      HomeOutlined,
+      UserOutlined,
+      WalletOutlined,
+      CommentOutlined,
+      BarChartOutlined,
+      CloudOutlined,
+      AppstoreOutlined,
+      TeamOutlined,
+      ShopOutlined,
+    ]
+      .map((icon, index) => {
+        if (MenuListArray.length <= index) {
+          return null;
         } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, down");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
+          return {
+            key: String(index + 1),
+            icon: React.createElement(icon),
+            label: MenuListArray[index],
+            onClick: () => {
+              console.log(MenuListArray[index]);
+              onClickCallback(index);
+            },
+          };
         }
-      } else {
-        // 스크롤 올릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, up");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(1);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, up");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(1);
-        } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, up");
-          (outerDivRef.current as HTMLElement).scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(2);
-        }
-      }
-    };
-    const outerDivRefCurrent = outerDivRef?.current;
-    outerDivRefCurrent?.addEventListener("wheel", wheelHandler);
+      })
+      .filter((el) => el);
 
-    return () => {
-      outerDivRefCurrent?.removeEventListener("wheel", wheelHandler);
-    };
-  }, []);
+  const handleClickMenu = (menu: number) => {
+    switch (menu) {
+      case MenuList.SpeechPro:
+        setMode(MenuList.SpeechPro);
+        break;
+      case MenuList.VocaPro:
+        setMode(MenuList.VocaPro);
+        break;
+      case MenuList.GrammarPro:
+        setMode(MenuList.GrammarPro);
+        break;
+      default:
+        setMode(MenuList.Main);
+        break;
+    }
+  };
 
-  //   useEffect(()=> {
-  //     console.log('scrollIndex :', scrollIndex)
-  //     switch(scrollIndex) {
-  //         case 1:
-  //             window.location.href = '/#Pronouciation'
-  //             break;
-  //         case 2:
-  //             window.location.href = '/#Speaking'
-  //             break;
-  //         case 3:
-  //             window.location.href = '/#Information'
-  //             break;
-  //         default:
-  //             window.location.href = ''
-  //             break;
-  //     }
-  //   }, [scrollIndex])
+  const changeTheme = () => {
+    dispatch(setThemeDM(!darkMode));
+  };
 
   return (
-    <div ref={outerDivRef} className={cn(styles.outer)}>
-      <div className={cn(styles.inner, styles.bgYellow)}
-      onClick={() => {
-        setNext(true)
-      }}
-      >
-        <span>
-          {/* <img className={styles.img} src={assess1}></img> */}
-          Speech Pro
-        </span>
-      </div>
-      <div className={cn(styles.divider)}></div>
-      <div className={cn(styles.inner, styles.bgBlue)}
-      onClick={() => {
-        setNext(true)
-      }}
-      >
-        <span>
-          {/* <img className={styles.img} src={assess2}></img> */}
-          Voca Pro
-        </span>
-      </div>
-      <div className={cn(styles.divider)}></div>
-      <div className={cn(styles.inner, styles.bgPink)}
-      onClick={() => {
-        setNext(true)
-      }}
+    <>
+      {!state.authToken && <UniversalAuth />}
+      <Layout hasSider>
+        <Sider
+          theme={darkMode ? "dark" : "light"}
+          style={{
+            overflow: "hidden",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+        >
+          <Space
+            direction="vertical"
+            size="middle"
+            style={{
+              display: "flex",
+              marginTop: "20px",
+              marginBottom: "20px",
+              marginLeft: "10px",
+            }}
+          >
+            <Switch
+              checked={darkMode}
+              onChange={changeTheme}
+              checkedChildren="Dark"
+              unCheckedChildren="Light"
+            />
+          </Space>
 
-      >Grammar Pro</div>
-      <Dots scrollIndex={scrollIndex} />
-    </div>
+          <Menu
+            theme={darkMode ? "dark" : "light"}
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            items={itemBuilder(MenuListArray, handleClickMenu)}
+          />
+        </Sider>
+        <Layout className="site-layout" style={{ marginLeft: 200, overflow: "hidden", }}>
+          {mode === MenuList.Main && <Main />}
+          {mode === MenuList.SpeechPro && <SpeechPro />}
+          {mode === MenuList.VocaPro && <VocaPro />}
+          {mode === MenuList.GrammarPro && <GrammarPro />}
+
+          <Footer
+            style={{
+              position: "fixed",
+              bottom: 0,
+              margin: 0,
+              width: "90%",
+              textAlign: "center",
+            }}
+          >
+            DevicePro ©2023 Created by Mediazen
+          </Footer>
+        </Layout>
+      </Layout>
+    </>
   );
 };
 

@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
-import { VOCA_PRO_API_URL, universalFetchData, AXIOS_CONFIG } from "../../Service/FetchData";
+import { universalFetchData, AXIOS_CONFIG } from "../../Service/FetchData";
 import { UniversalFetchDataResolveType, TErrorType } from "../../index.d";
 import { useSelector } from 'react-redux'
 import { RootState } from '../../Redux/Reducer/rootReducer'
+import VocaProView from '../../Page/VocaPro/View'
 
 const bodyData = {
   text: "I once misquoted the fees for a particular type of membership to the club where I worked. I explained my mistake to my supervisor, who appreciated my coming to him, and my honesty.",
@@ -26,7 +27,7 @@ export const VocaPro = () => {
     async () =>
       universalFetchData({
         method: "post",
-        url: VOCA_PRO_API_URL + "/api/edu/vocapro",
+        url: "/api/edu/vocapro",
         // url: VOCA_PRO_API_URL + "/vocapro",
         data: bodyData,
         headers: AXIOS_CONFIG(authToken),
@@ -47,19 +48,8 @@ export const VocaPro = () => {
     }
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-
   return (
-    <>
-      <div>{`VocaPro`}</div>
-      <div>{data?.message === "success" && data.message}</div>
-    </>
+    <VocaProView data={data?.data.data} isLoading={isLoading} />
   );
 };
 export default VocaPro;

@@ -2,15 +2,10 @@ import { RawAxiosRequestHeaders } from "axios";
 
 //** Repository of Defined Types for All */
 
-export const MenuListArray = [
-  "Home",
-  "SpeechPro",
-  "VocaPro",
-  "GrammarPro",
-];
+export const MenuListArray = ["Main", "SpeechPro", "VocaPro", "GrammarPro"];
 
 export enum MenuList {
-  "Home",
+  "Main",
   "SpeechPro",
   "VocaPro",
   "GrammarPro",
@@ -39,3 +34,7 @@ export interface UniversalFetchDataType<T> {
 export interface TErrorType<T> {
   message: T;
 }
+
+export type PaginationPosition = "top" | "bottom" | "both";
+
+export type PaginationAlign = "start" | "center" | "end";

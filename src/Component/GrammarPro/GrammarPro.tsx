@@ -1,12 +1,8 @@
 import { useQuery } from "react-query";
-import {
-  GRAMMAR_PRO_API_URL,
-  universalFetchData,
-  AXIOS_CONFIG
-} from "../../Service/FetchData";
-import { UniversalFetchDataResolveType, TErrorType } from "../../index.d";
-import { useSelector } from 'react-redux'
-import { RootState } from '../../Redux/Reducer/rootReducer'
+import { universalFetchData, AXIOS_CONFIG } from "../../Service/FetchData";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Reducer/rootReducer";
+import GrammarProView from "../../Page/GrammarPro/View";
 
 const bodyData = {
   sentences:
@@ -15,20 +11,19 @@ const bodyData = {
 };
 
 export const GrammarPro = () => {
-    const authToken = useSelector(
-        (state: RootState) => state.dataReducer.authToken
-      );
+  const authToken = useSelector(
+    (state: RootState) => state.dataReducer.authToken
+  );
 
-      console.log(
-        `[GrammarPro] authToken : ${authToken}`
-      );
+  console.log(`[GrammarPro] authToken : ${authToken}`);
+ 
 
   const { isLoading, isError, data, error } = useQuery(
     "get_grammarpro",
     async () =>
       universalFetchData({
         method: "post",
-        url: GRAMMAR_PRO_API_URL + "/api/edu/grammarpro",
+        url: "/api/edu/grammarpro",
         // url: GRAMMAR_PRO_API_URL + "/grammarpro",
         data: bodyData,
         headers: AXIOS_CONFIG(authToken),
@@ -49,19 +44,6 @@ export const GrammarPro = () => {
     }
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error</span>;
-  }
-
-  return (
-    <>
-      <div>{`GrammarPro`}</div>
-      <div>{data?.message === "success" && data.message}</div>
-    </>
-  );
+  return <GrammarProView data={data?.data.data} isLoading={isLoading} />;
 };
 export default GrammarPro;
