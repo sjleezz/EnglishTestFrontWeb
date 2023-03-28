@@ -4,6 +4,9 @@ import * as type from '../Types'
 export const SET_TIME_OUT = "SET_TIME_OUT" as const;
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN" as const;
 export const SET_AUTH_TOKEN_FOR_SPEECH_PRO = "SET_AUTH_TOKEN_FOR_SPEECH_PRO" as const;
+export const SET_AUTH_TOKEN_LOGIN = "SET_AUTH_TOKEN_LOGIN" as const;
+export const SET_MODE = "SET_MODE" as const;
+export const SET_CONTEXT = "SET_CONTEXT" as const;
 
 // Actions for Data
 export const setTimeout = (payload : type.Data1) => {
@@ -24,9 +27,21 @@ export const setAuthTokenForSpeechPro = (payload : type.Data3) => {
         payload: payload
     }
 }
-// export const setData4 = (payload : type.Data4) => {
-//     return {
-//         type : SET_DATA_4,
-//         payload: payload
-//     }
-// }
+export const setAuthTokenLogin = (payload : type.Data4) => {
+    return {
+        type : SET_AUTH_TOKEN_LOGIN,
+        payload: payload
+    }
+}
+export const setMode = (payload : type.Data5) => {
+    return {
+        type : SET_MODE,
+        payload: payload
+    }
+}
+export const setContext = (payload : type.Data6) => {
+    return {
+        type : SET_CONTEXT,
+        payload: payload
+    }
+}

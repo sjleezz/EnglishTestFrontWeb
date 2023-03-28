@@ -1,20 +1,16 @@
-import { MenuList } from "../index.d";
-import { useState, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux/Reducer/rootReducer";
-import { setTimeout } from "../Redux/Actions/actionsForData";
-import Intro from "./Intro";
-import Home from "./Home";
-import UniversalAuth from "../Component/UniversalAuth";
+import { useEffect } from "react";
 
 export const GateWay = () => {
- 
-  return (
-    <div>
-      <Intro />
-      
-    </div>
-  );
+  useEffect(() => {
+    const isLogin = window.localStorage.getItem("isLogin");
+    if (isLogin) {
+      window.location.href = "/Home";
+    } else {
+      window.location.href = "/Login";
+    }
+  });
+
+  return null;
 };
 
 export default GateWay;

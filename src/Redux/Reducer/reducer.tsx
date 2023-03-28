@@ -15,6 +15,9 @@ export const initialDataState: type.State = {
   timeout: 10,
   authToken: '',
   authTokenForSpeechPro: '',
+  authTokenLogin: '',
+  mode: '',
+  context: '',
 };
 
 export const initialDataStateForSpeechProChapter: type.StateForSpeechProChapter = {
@@ -50,7 +53,9 @@ export const dataReducer = createReducer<
   | type.changeStateData1Action
   | type.changeStateData2Action
   | type.changeStateData3Action
-  // | type.changeStateData4Action
+  | type.changeStateData4Action
+  | type.changeStateData5Action
+  | type.changeStateData6Action
 >(initialDataState, {
 
   [DataActions.SET_TIME_OUT]: (state, action) =>
@@ -67,10 +72,18 @@ export const dataReducer = createReducer<
     produce(state, (draft) => {
       draft.authTokenForSpeechPro = action.payload;
     }),
-  // [DataActions.SET_DATA_4]: (state, action) =>
-  //   produce(state, (draft) => {
-  //     draft.data4 = action.payload;
-  //   }),
+  [DataActions.SET_AUTH_TOKEN_LOGIN]: (state, action) =>
+    produce(state, (draft) => {
+      draft.authTokenLogin = action.payload;
+    }),
+  [DataActions.SET_MODE]: (state, action) =>
+    produce(state, (draft) => {
+      draft.mode = action.payload;
+    }),
+  [DataActions.SET_CONTEXT]: (state, action) =>
+    produce(state, (draft) => {
+      draft.context = action.payload;
+    }),
 });
 
 // Reducer for speechPro chapter

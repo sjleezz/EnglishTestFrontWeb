@@ -2,13 +2,46 @@ import { RawAxiosRequestHeaders } from "axios";
 
 //** Repository of Defined Types for All */
 
-export const MenuListArray = ["Main", "SpeechPro", "VocaPro", "GrammarPro"];
+export const MenuListArray = [
+  "Main", "SpeechPro"];
 
 export enum MenuList {
   "Main",
   "SpeechPro",
-  "VocaPro",
-  "GrammarPro",
+}
+
+export const ModeListArray = [
+  "Mode1", 
+  "Mode2"];
+
+export type ModeType = 
+| "Mode1"
+| "Mode2"
+| string
+
+export enum ModeList {
+  "Mode1", 
+  "Mode2"
+}
+
+export const SubjectListArray = ["Education", "Environment", "Globalization", "Technology", "Health", "Social"];
+
+export type SubjectType = 
+| "Education"
+| "Environment"
+| "Globalization"
+| "Technology"
+| "Health"
+| "Social"
+| string
+
+export enum SubjectList {
+  "Education",
+  "Environment",
+  "Globalization",
+  "Technology",
+  "Health",
+  "Social"
 }
 
 export type MethodType = "POST" | "GET";

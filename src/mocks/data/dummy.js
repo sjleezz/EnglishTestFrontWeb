@@ -101,8 +101,8 @@ export const TEST_LIST_SENTENCES = {
 export const TEST_LOGIN = [
   {
     id: 0,
-    loginId: "testId",
-    password: "testPw",
+    loginId: "1",
+    password: "2",
     name: "testName",
     email: "123@example.com",
     gender: "M",

@@ -3,6 +3,7 @@ import * as SpeechProActions from "./Actions/actionsForSpeechPro";
 import * as VocaProActions from "./Actions/actionsForVocaPro";
 import * as GrammarProActions from "./Actions/actionsForGrammarPro";
 import * as ThemeActions from "./Actions/actionsForTheme";
+import { SubjectType } from '../index.d'
 
 //******************************* **********************************//
 //******************************* **********************************//
@@ -13,11 +14,17 @@ import * as ThemeActions from "./Actions/actionsForTheme";
 export type Data1 = number;
 export type Data2 = string;
 export type Data3 = string;
+export type Data4 = string;
+export type Data5 = string;
+export type Data6 = SubjectType;
 
 export interface State {
   timeout: Data1;
   authToken: Data2;
   authTokenForSpeechPro: Data3;
+  authTokenLogin: Data4;
+  mode: Data5;
+  context : Data6
 }
 
 export type changeStateData1Action = ReturnType<typeof DataActions.setTimeout>;
@@ -26,6 +33,15 @@ export type changeStateData2Action = ReturnType<
 >;
 export type changeStateData3Action = ReturnType<
   typeof DataActions.setAuthTokenForSpeechPro
+>;
+export type changeStateData4Action = ReturnType<
+  typeof DataActions.setAuthTokenLogin
+>;
+export type changeStateData5Action = ReturnType<
+  typeof DataActions.setMode
+>;
+export type changeStateData6Action = ReturnType<
+  typeof DataActions.setContext
 >;
 
 //******************************* **********************************//

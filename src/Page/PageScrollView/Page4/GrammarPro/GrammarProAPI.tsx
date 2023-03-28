@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { universalFetchData, AXIOS_CONFIG } from "../../Service/FetchData";
+import { universalFetchData, AXIOS_CONFIG } from "../../../../Service/FetchData";
 import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/Reducer/rootReducer";
-import GrammarProView from "../../Page/GrammarPro/View";
+import { RootState } from "../../../../Redux/Reducer/rootReducer";
+import GrammarProView from "./View";
 
 const bodyData = {
   sentences:
@@ -16,7 +16,6 @@ export const GrammarPro = () => {
   );
 
   console.log(`[GrammarPro] authToken : ${authToken}`);
- 
 
   const { isLoading, isError, data, error } = useQuery(
     "get_grammarpro",

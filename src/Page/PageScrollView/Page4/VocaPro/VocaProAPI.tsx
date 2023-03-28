@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
-import { universalFetchData, AXIOS_CONFIG } from "../../Service/FetchData";
-import { UniversalFetchDataResolveType, TErrorType } from "../../index.d";
+import { universalFetchData, AXIOS_CONFIG } from "../../../../Service/FetchData";
+import { UniversalFetchDataResolveType, TErrorType } from "../../../../index.d";
 import { useSelector } from 'react-redux'
-import { RootState } from '../../Redux/Reducer/rootReducer'
-import VocaProView from '../../Page/VocaPro/View'
+import { RootState } from '../../../../Redux/Reducer/rootReducer'
+import VocaProView from './View'
 
 const bodyData = {
   text: "I once misquoted the fees for a particular type of membership to the club where I worked. I explained my mistake to my supervisor, who appreciated my coming to him, and my honesty.",

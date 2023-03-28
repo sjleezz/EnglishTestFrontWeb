@@ -14,8 +14,6 @@ import {
 import { Layout, Menu, MenuProps, Switch, Space } from "antd";
 import { MenuList, MenuListArray } from "../index.d";
 import SpeechPro from "../Component/SpeechPro/SpeechPro";
-import VocaPro from "../Component/VocaPro/VocaPro";
-import GrammarPro from "../Component/GrammarPro/GrammarPro";
 import Main from "../Page/Main";
 import { RootState } from "../Redux/Reducer/rootReducer";
 import { UniversalAuth } from "../Component/UniversalAuth";
@@ -78,12 +76,6 @@ export const Home = () => {
       case MenuList.SpeechPro:
         setMode(MenuList.SpeechPro);
         break;
-      case MenuList.VocaPro:
-        setMode(MenuList.VocaPro);
-        break;
-      case MenuList.GrammarPro:
-        setMode(MenuList.GrammarPro);
-        break;
       default:
         setMode(MenuList.Main);
         break;
@@ -137,10 +129,8 @@ export const Home = () => {
         <Layout className="site-layout" style={{ marginLeft: 200, overflow: "hidden", }}>
           {mode === MenuList.Main && <Main />}
           {mode === MenuList.SpeechPro && <SpeechPro />}
-          {mode === MenuList.VocaPro && <VocaPro />}
-          {mode === MenuList.GrammarPro && <GrammarPro />}
 
-          <Footer
+          {/* <Footer
             style={{
               position: "fixed",
               bottom: 0,
@@ -150,7 +140,7 @@ export const Home = () => {
             }}
           >
             DevicePro ©2023 Created by Mediazen
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
     </>

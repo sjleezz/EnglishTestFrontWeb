@@ -7,6 +7,7 @@ import { accountsHandlers } from "./accountsHandler";
 import { passwordsHandlers } from "./passwordsHandler";
 import { vproHandlers } from "./vproHandlers";
 import { gproHandlers } from "./gproHandlers";
+import { loginHandlers } from "./loginHandlers";
 
 export const worker = setupWorker(
   ...handlers,
@@ -16,5 +17,6 @@ export const worker = setupWorker(
   ...accountsHandlers,
   ...passwordsHandlers,
   ...vproHandlers,
-  ...gproHandlers
+  ...gproHandlers,
+  ...loginHandlers
 );
