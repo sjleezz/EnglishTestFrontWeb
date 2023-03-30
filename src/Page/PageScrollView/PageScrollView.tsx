@@ -3,6 +3,7 @@ import { RootState } from "../../Redux/Reducer/rootReducer";
 import { useSelector } from "react-redux";
 import usePageScroll from "../../Hooks/usePageScroll";
 import usePageMove from "../../Hooks/usePageMove";
+import usePageBlockScroll from "../../Hooks/usePageBlockScroll";
 import styles from "../../theme/PageView.module.css";
 import cn from "classnames";
 import Dots from "../../Component/Dots";
@@ -31,6 +32,12 @@ export const PageScrollView = ({
     setCurrent: setCurrent,
   });
 
+  // Block scroll
+  // usePageBlockScroll({
+  //   ref: outerDivRef,
+  //   current : current
+  // })
+
   console.log("[PageScrollView] current :", current);
 
   const onClickHandler = () => {
@@ -46,20 +53,20 @@ export const PageScrollView = ({
         outerDivRef={outerDivRef}
         setCurrent={setCurrent}
       />
-      {/* <div className={cn(styles.divider)}></div> */}
+      <div className={cn(styles.divider)}></div>
       <Page2
         onClickHandler={onClickHandler}
         outerDivRef={outerDivRef}
         setCurrent={setCurrent}
       />
-      {/* <div className={cn(styles.divider)}></div> */}
+      <div className={cn(styles.divider)}></div>
       <Page3
         setIsResult={setIsResult}
         onClickHandler={onClickHandler}
         outerDivRef={outerDivRef}
         setCurrent={setCurrent}
       />
-      {/* <div className={cn(styles.divider)}></div> */}
+      <div className={cn(styles.divider)}></div>
       <Page4
         isResult={isResult}
         onClickHandler={onClickHandler}

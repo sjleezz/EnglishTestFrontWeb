@@ -89,8 +89,8 @@ export const Home = () => {
   return (
     <>
       {!state.authToken && <UniversalAuth />}
-      <Layout hasSider>
-        <Sider
+      <Layout>
+        {/* <Sider
           theme={darkMode ? "dark" : "light"}
           style={{
             overflow: "hidden",
@@ -125,8 +125,8 @@ export const Home = () => {
             defaultSelectedKeys={["1"]}
             items={itemBuilder(MenuListArray, handleClickMenu)}
           />
-        </Sider>
-        <Layout className="site-layout" style={{ marginLeft: 200, overflow: "hidden", }}>
+        </Sider> */}
+        <Layout className="site-layout" style={{ overflow: "hidden", }}>
           {mode === MenuList.Main && <Main />}
           {mode === MenuList.SpeechPro && <SpeechPro />}
 

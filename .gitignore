@@ -12,6 +12,10 @@
 /build
 /dist
 
+#nginx
+Dockerfile
+nginx.conf
+
 # misc
 .DS_Store
 .env.local

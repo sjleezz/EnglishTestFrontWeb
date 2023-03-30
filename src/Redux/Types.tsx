@@ -3,7 +3,7 @@ import * as SpeechProActions from "./Actions/actionsForSpeechPro";
 import * as VocaProActions from "./Actions/actionsForVocaPro";
 import * as GrammarProActions from "./Actions/actionsForGrammarPro";
 import * as ThemeActions from "./Actions/actionsForTheme";
-import { SubjectType } from '../index.d'
+import { SubjectType } from "../index.d";
 
 //******************************* **********************************//
 //******************************* **********************************//
@@ -24,7 +24,7 @@ export interface State {
   authTokenForSpeechPro: Data3;
   authTokenLogin: Data4;
   mode: Data5;
-  context : Data6
+  context: Data6;
 }
 
 export type changeStateData1Action = ReturnType<typeof DataActions.setTimeout>;
@@ -37,12 +37,8 @@ export type changeStateData3Action = ReturnType<
 export type changeStateData4Action = ReturnType<
   typeof DataActions.setAuthTokenLogin
 >;
-export type changeStateData5Action = ReturnType<
-  typeof DataActions.setMode
->;
-export type changeStateData6Action = ReturnType<
-  typeof DataActions.setContext
->;
+export type changeStateData5Action = ReturnType<typeof DataActions.setMode>;
+export type changeStateData6Action = ReturnType<typeof DataActions.setContext>;
 
 //******************************* **********************************//
 //******************************* **********************************//
@@ -51,24 +47,24 @@ export type changeStateData6Action = ReturnType<
 //******************************* **********************************//
 
 export interface Chapter {
-  id : number,
-  name : string
+  id: number;
+  name: string;
 }
 
 export interface Sentence {
-  chapterId : number,
-  id : number,
-  ipa : string,
-  isWave : boolean,
-  letters : string,
-  modelGraph : string,
-  phonemes : string,
-  status : number,
-  text : string,
-  textId : string,
-  textNormalized : string, 
-  wave : string,
-  words : string
+  chapterId: number;
+  id: number;
+  ipa: string;
+  isWave: boolean;
+  letters: string;
+  modelGraph: string;
+  phonemes: string;
+  status: number;
+  text: string;
+  textId: string;
+  textNormalized: string;
+  wave: string;
+  words: string;
 }
 
 export interface SpeechProChapterDataType {
@@ -117,15 +113,15 @@ export interface DescriptionType {
   level: string;
   pos: string;
   guideword: string;
-  definition: string,
+  definition: string;
   dictionary_example: string[];
   learner_example: string[];
 }
 
 export interface SynonymType {
-  word: string,
-  cefr: string,
-  html_description: string
+  word: string;
+  cefr: string;
+  html_description: string;
 }
 
 export interface WordsDetailType {
@@ -138,7 +134,7 @@ export interface WordsDetailType {
   pos: string;
   html_description: string;
   description: DescriptionType[];
-  synonym : SynonymType[]
+  synonym: SynonymType[];
 }
 
 export interface SentsDetailType {
@@ -201,23 +197,25 @@ export interface ChangeWordType {
   change_idx: number;
 }
 
-export interface GrammarProDataType {
-  success: string;
-  data: {
-    full_input: string;
-    full_output: string;
-    changes: ChangeWordType[];
-    total_summary: {
-      total_cefr: string;
-      total_words: number;
-      change_ct_by_level: {
-        B1: number;
-        B2: number;
-        A2: number;
-        C1: number;
-      };
+export interface GrammarProDataFieldType {
+  full_input: string;
+  full_output: string;
+  changes: ChangeWordType[];
+  total_summary: {
+    total_cefr: string;
+    total_words: number;
+    change_ct_by_level: {
+      B1: number;
+      B2: number;
+      A2: number;
+      C1: number;
     };
   };
+}
+
+export interface GrammarProDataType {
+  success: string;
+  data: GrammarProDataFieldType;
 }
 
 export interface StateForSpeechProChapter {
@@ -244,11 +242,80 @@ export type changeStateSpeechProSentenceAction = ReturnType<
   typeof SpeechProActions.setSentences
 >;
 
-export type changeStateVocaAction = ReturnType<typeof VocaProActions.setVocaData>;
+export type changeStateVocaAction = ReturnType<
+  typeof VocaProActions.setVocaData
+>;
 
 export type changeStateGrammarAction = ReturnType<
   typeof GrammarProActions.setGrammarData
 >;
+
+//** Sample Data */
+export const sampleWordsDetail : WordsDetailType = {
+  word_idx: 0,
+  raw_word: "",
+  cefr: "",
+  stopword: false,
+  word: "",
+  lemma: "",
+  pos: "",
+  html_description: "",
+  description: [],
+  synonym: [],
+};
+
+export const sampleChangeWord = {
+  idx_start: 0,
+  idx_end: 0,
+  before_change: "",
+  after_change: "",
+  cefr: "",
+  change_type: "",
+  error_type: "",
+  description: "",
+  change_idx: 0,
+};
+
+export const sampleSentsDetail : SentsDetailType = {
+  sent_idx: 0,
+  raw_sentence: "",
+  sentence: "",
+  sentence_summary: {
+    sentence_num_words: 0,
+  sentence_cefr: "",
+  sentence_word_list_by_cefr: {
+    A1: [],
+    A2: [],
+    B1: [],
+    B2: [],
+    C1: [],
+    C2: [],
+    unk: [],
+    stopwords: [],
+  },
+  sentence_word_count_by_cefr: {
+    A1: 0,
+    A2: 0,
+    B1: 0,
+    B2: 0,
+    C1: 0,
+    C2: 0,
+    unk: 0,
+    stopwords: 0,
+  },
+  sentence_word_distribution_by_cefr: {
+    A1: 0,
+    A2: 0,
+    B1: 0,
+    B2: 0,
+    C1: 0,
+    C2: 0,
+    unk: 0,
+    stopwords: 0,
+  }
+  },
+  words_detail: Array(10).fill(sampleWordsDetail),
+};
 
 //******************************* **********************************//
 //******************************* **********************************//

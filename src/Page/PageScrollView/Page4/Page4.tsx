@@ -3,9 +3,10 @@ import styles from "../../../theme/PageView.module.css";
 import cn from "classnames";
 import { Tabs, Empty, FloatButton } from "antd";
 import { QuestionCircleOutlined, RedoOutlined } from "@ant-design/icons";
-import API from "./API";
+import TabPage from "./TabPage";
 import usePageScroll from "../../../Hooks/usePageScroll";
 import usePageMove from "../../../Hooks/usePageMove";
+import usePageBlockScroll from "../../../Hooks/usePageBlockScroll";
 
 const size = "large"; // 'small' | 'middle' | 'large'
 
@@ -24,12 +25,10 @@ const filterTarget = (target: string) => {
   }
 };
 
-const handleClickMenu1 = () => {
-
-};
+const handleClickMenu1 = () => {};
 
 const handleClickMenu2 = () => {
-  window.location.reload()
+  window.location.reload();
 };
 
 // Page4 : 분석 결과
@@ -46,23 +45,23 @@ export const Page4 = ({
   current: number;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const resultRef = useRef<HTMLDivElement>(null);
+
   const resetRef = useRef<HTMLDivElement>(null);
 
   console.log("[Page4] isResult :", isResult);
 
   // Page Movement by Scrolling Hook
-  usePageScroll({
-    ref: resultRef,
-    setCurrent: setCurrent,
-  });
+  // usePageScroll({
+  //   ref: resultRef,
+  //   setCurrent: setCurrent,
+  // });
 
   usePageMove({
-    ref: resetRef,
+    ref : resetRef,
     pageRef: outerDivRef,
-    current: 0,
-    setCurrent: setCurrent,
-  });
+    current : current,
+    setCurrent: setCurrent
+  })
 
   // Tab Builder
   const tabItems = () => {
@@ -71,16 +70,17 @@ export const Page4 = ({
       return {
         label: `${val}`,
         key: id,
-        children: <API target={filterTarget(val)} />,
+        children: <TabPage target={filterTarget(val)} />,
       };
     });
   };
 
   return (
-    <div ref={resultRef}>
+    <div>
       {isResult ? (
-        <div className={cn(styles.tab4)} onClick={onClickHandler}>
+        <div className={cn(styles.inner, styles.tab4)} onClick={onClickHandler}>
           <Tabs
+            style={{ width: "100%"}}
             defaultActiveKey="1"
             type="card"
             size={size}
@@ -92,18 +92,19 @@ export const Page4 = ({
           <Empty description={"No Result"} />
         </div>
       )}
-      <FloatButton.Group shape="circle" style={{ left: 64 }}>
+      <FloatButton.Group shape="circle" style={{ right: 40 }}>
         <FloatButton
-        tooltip={<p>{'About'}</p>}
+          tooltip={<p>{"About"}</p>}
           icon={<QuestionCircleOutlined />}
           onClick={handleClickMenu1}
         />
-        <FloatButton 
-        tooltip={<p>{'Refresh'}</p>}
-        icon={<RedoOutlined />} 
-        onClick={handleClickMenu2} />
+        <FloatButton
+          tooltip={<p>{"Refresh"}</p>}
+          icon={<RedoOutlined />}
+          onClick={handleClickMenu2}
+        />
         <div ref={resetRef}>
-          {current === 3 && <FloatButton.BackTop visibilityHeight={0} />}
+          {current === 3 && <FloatButton.BackTop tooltip={<p>{"Go to Top"}</p>} visibilityHeight={0} />}
         </div>
       </FloatButton.Group>
     </div>

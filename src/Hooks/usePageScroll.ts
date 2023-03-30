@@ -17,11 +17,17 @@ export const usePageScroll = ({
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
-      e.preventDefault();
+      e.stopImmediatePropagation();  //상위 뿐 아니라 같은 레벨로도 이벤트가 전파되지 않도록 중단
+      // e.stopPropagation() //상위로 이벤트가 전파되지 않도록 중단
       // 스크롤 행동 구현
       const { deltaY } = e;
       const { scrollTop } = ref.current as HTMLElement; // 스크롤 위쪽 끝부분 위치
       const pageHeight = window.innerHeight * 0.9; // 화면 세로길이, 100vh와 같습니다.
+
+      // console.log('###################')
+      // console.log('scrollTop :', scrollTop)
+      // console.log('pageHeight :', pageHeight)
+      // console.log('###################')
 
       if (deltaY > 0) {
         if (scrollTop >= 0 && scrollTop < pageHeight) {
@@ -40,22 +46,25 @@ export const usePageScroll = ({
             behavior: "smooth",
           });
           setCurrent(2);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
+        } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
           console.log("현재 3페이지, down");
-          (ref.current as HTMLElement).scrollTo({
-            top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
-            left: 0,
-            behavior: "smooth",
-          });
-          setCurrent(3);
-        } else {
+          // (ref.current as HTMLElement).scrollTo({
+          //   top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
+          //   left: 0,
+          //   behavior: "smooth",
+          // });
+          // setCurrent(3);
+          return false
+          
+        } else if (scrollTop >= pageHeight * 3 && scrollTop < pageHeight * 4) {
           console.log("현재 4페이지, down");
-          (ref.current as HTMLElement).scrollTo({
-            top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
-            left: 0,
-            behavior: "smooth",
-          });
-          setCurrent(3);
+          // (ref.current as HTMLElement).scrollTo({
+          //   top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
+          //   left: 0,
+          //   behavior: "smooth",
+          // });
+          // setCurrent(3);
+          return false
         }
       } else {
         if (scrollTop >= 0 && scrollTop < pageHeight) {
@@ -74,7 +83,7 @@ export const usePageScroll = ({
             behavior: "smooth",
           });
           setCurrent(0);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
+        } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
           console.log("현재 3페이지, up");
           (ref.current as HTMLElement).scrollTo({
             top: pageHeight + DIVIDER_HEIGHT,
@@ -82,14 +91,16 @@ export const usePageScroll = ({
             behavior: "smooth",
           });
           setCurrent(1);
-        } else {
+        } else  if (scrollTop >= pageHeight * 3 && scrollTop < pageHeight * 4) {
           console.log("현재 4페이지, up");
-          (ref.current as HTMLElement).scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setCurrent(2);
+          
+          // (ref.current as HTMLElement).scrollTo({
+          //   top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+          //   left: 0,
+          //   behavior: "smooth",
+          // });
+          // setCurrent(2);
+          return false
         }
       }
     };

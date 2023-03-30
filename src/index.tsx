@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import {createRoot} from "react-dom/client";
+
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
 import App from "./App";
@@ -11,10 +12,12 @@ const isDevelopment = process.env.NODE_ENV === "development";
 console.log('isDevelopment :', isDevelopment)
 
 function prepare() {
-  if (isDevelopment) {
-    const { worker } = require("./mocks/browser");
+  // if (isDevelopment) {
+  //   const { worker } = require("./mocks/browser");
+  //   worker.start();
+  // }
+  const { worker } = require("./mocks/browser");
     worker.start();
-  }
   return Promise.resolve();
 }
 
@@ -41,7 +44,7 @@ prepare().then(() => {
       <BrowserRouter>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             <App />
           </QueryClientProvider>
         </Provider>

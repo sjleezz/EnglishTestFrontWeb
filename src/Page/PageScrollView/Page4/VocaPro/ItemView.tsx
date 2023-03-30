@@ -4,7 +4,7 @@ import {
   WordsDetailType,
 } from "../../../../Redux/Types";
 import {
-  EditOutlined,
+  CheckOutlined,
   EllipsisOutlined,
   SettingOutlined,
   InfoCircleOutlined,
@@ -16,9 +16,17 @@ const { Meta } = Card;
 export const ItemView = ({
   data,
   isLoading,
+  setSelectedData,
+  onDrawerClose
 }: {
   data: VocaProDataType;
   isLoading: boolean;
+  setSelectedData: React.Dispatch<
+    React.SetStateAction<WordsDetailType | undefined>
+  >;
+  onDrawerClose: React.Dispatch<
+  React.SetStateAction<boolean>
+>;
 }) => {
   const [modal, modalContextHolder] = Modal.useModal();
   const sentsDetailArray = data ? data.sents_detail : [];
@@ -30,7 +38,7 @@ export const ItemView = ({
     switch (type) {
       case "info":
         instance = modal.success({
-          title: `Information message`,
+          title: `${wordDetail.raw_word}`,
           content: (
             <div>
               <div>{`CEFR : ${wordDetail.cefr}`}</div>
@@ -43,7 +51,7 @@ export const ItemView = ({
         break;
       case "setting":
         instance = modal.success({
-          title: `Setting message`,
+          title: `${wordDetail.raw_word}`,
           content: (
             <div>
               <div>{`CEFR : ${wordDetail.cefr}`}</div>
@@ -54,18 +62,9 @@ export const ItemView = ({
           ),
         });
         break;
-      case "ellipsis":
-        instance = modal.success({
-          title: `Detail message`,
-          content: (
-            <div>
-              <div>{`CEFR : ${wordDetail.cefr}`}</div>
-              <div>
-                {`Description : ${wordDetail.description[0].dictionary_example[0]}`}
-              </div>
-            </div>
-          ),
-        });
+      case "select":
+        setSelectedData(wordDetail);
+        onDrawerClose(true)
         break;
       default:
         instance = modal.success({
@@ -103,7 +102,7 @@ export const ItemView = ({
       <Space
         wrap
         direction="horizontal"
-        size="middle"
+        size="small"
         style={{ display: "flex" }}
       >
         {!isLoading ? (
@@ -114,30 +113,26 @@ export const ItemView = ({
                   (wordDetail: WordsDetailType, i) => {
                     return (
                       <Card
-                        style={{ width: 200, marginTop: 10 }}
+                        style={{ width: 100, marginTop: 5 }}
                         actions={[
-                          <SettingOutlined
-                            key="setting"
-                            onClick={() => handleClick(wordDetail, "setting")}
-                          />,
                           <InfoCircleOutlined
                             key="info"
                             onClick={() => handleClick(wordDetail, "info")}
                           />,
-                          <EllipsisOutlined
-                            key="ellipsis"
-                            onClick={() => handleClick(wordDetail, "ellipsis")}
+                          <CheckOutlined
+                            key="select"
+                            onClick={() => handleClick(wordDetail, "select")}
                           />,
                         ]}
                       >
                         <Skeleton loading={isLoading} avatar active>
                           <Meta
                             title={wordDetail.raw_word}
-                            description={
-                              <Space>
-                                <Space>{`cefr : ${wordDetail.cefr}`}</Space>
-                              </Space>
-                            }
+                            // description={
+                            //   <Space>
+                            //     <Space>{`cefr : ${wordDetail.cefr}`}</Space>
+                            //   </Space>
+                            // }
                           />
                         </Skeleton>
                       </Card>

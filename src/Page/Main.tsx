@@ -62,9 +62,9 @@ export const Main: React.FC = () => {
       </Header>
       <Content
         style={{
-          height: "90vh",
+          // height: "90vh",
           margin: "10px 10px 0",
-          overflow: "hidden",
+          // overflow: "hidden",
         }}
       >
         <div
